@@ -15,20 +15,38 @@ $(function() {
     });
 
     obs.on('ConnectionOpened', () => {
-        obs.send('GetCurrentScene').then(data => {
-            $('input[name="obs_c_scene"]').val( data.name );
-        
+        obs.send('GetSceneList').then(data => {
+            console.log(data);
             $('#obs_c_response').val( JSON.stringify(data, null, 2) );
-        
+
+            $('select[name="obs_c_scene"] > option').remove();
+            $.each(data.scenes, (index, value) => {
+                $('select[name="obs_c_scene"]').append($('<option>').html(value.name).val(value.name));
+            });
+
+            $('select[name="obs_c_scene"]').val( data.currentScene );
+
             $("#obs_c_table tbody").html( "" );
 	    
-	    $('.simple').show();
+	        $('.simple').show();
 	    
-	    $('input[name="obs_c_full"]').prop('checked', false);
-            
-            getData( data.sources, true );
-        });
+    	    $('input[name="obs_c_full"]').prop('checked', false);
+
+            obs.send('GetCurrentScene').then(data => {
+                console.log(data);
+                getData( data.sources, true );
+            });
+
+        });            
+/*
+        obs.send('GetCurrentScene').then(data => {
+            $('select[name="obs_c_scene"]').val( data.name );
         
+
+        
+
+        });
+*/
     });
 
     $('input[name="obs_c_send"]').on('click', e => {
@@ -39,6 +57,7 @@ $(function() {
         let json_data;
 	    let col;
 	    json_data = tsvJSON( $('textarea[name="obs_c_set_text"]').val() );
+        $('textarea[name="obs_c_set_text"]').val('');
 	
 	    for (var item in json_data) {
             for (var key in json_data[item]) {
@@ -185,7 +204,7 @@ function getData( sources, checkFirst ) {
                         $("input[name='obs_c_radio'][value='" + $("input[name='obs_c_radio']:checked").val() + "']").prop('checked',true).trigger('change');
                         $('#obs_c_wrapper').show();
                         $('.cssload-thecube').hide();
-    		    });
+    		            });
                     });
                 });
             });
@@ -200,18 +219,18 @@ function getData( sources, checkFirst ) {
             Promise.all(promiseArray)
                 .then(() => {
                 sortTable()
-		.then(() => {
-                $("input[name='obs_c_radio'][value='" + $("input[name='obs_c_radio']:checked").val() + "']").prop('checked',true).trigger('change');
-                $('#obs_c_wrapper').show();
-                $('.cssload-thecube').hide();
-    	    });
-            });
+		            .then(() => {
+                    $("input[name='obs_c_radio'][value='" + $("input[name='obs_c_radio']:checked").val() + "']").prop('checked',true).trigger('change');
+                    $('#obs_c_wrapper').show();
+                    $('.cssload-thecube').hide();
+    	            });
+                });
         }
     });
 }
 
 function getRequest( source ) {
-    let scene_name = $('input[name="obs_c_scene"]').val();
+    let scene_name = $('select[name="obs_c_scene"]:selected').val();
     
     if ( source.type === 'group') {
         getData( source.groupChildren , false );
@@ -222,7 +241,7 @@ function getRequest( source ) {
     
     if ( !elm ) {
         elm = $('<tr />');
-	elm.attr('name', source.name);
+	    elm.attr('name', source.name);
         elm.append('<td><input type="text"     name="obs_c_type"   class="obs_c_td10" placeholder="textgdiplus" readonly="true"></td> ');
         elm.append('<td><input type="number"   name="obs_c_id"     class="obs_c_td03" placeholder="id" readonly="true"></td>          ');
         elm.append('<td><input type="text"     name="obs_c_name"   class="obs_c_td10" placeholder="name" readonly="true"></td>        ');
@@ -378,7 +397,7 @@ function sendData() {
 }
 
 function sendRequest( i, elm ) {
-    let scene_name = $('input[name="obs_c_scene"]').val();
+    let scene_name = $('select[name="obs_c_scene"]:selected').val();
     let param = {};
     let arr;
 
@@ -431,7 +450,7 @@ function sendRequest( i, elm ) {
     if ( $("#obs_c_table tbody tr").length <= i + 1 ) {
     
         obs.send('GetCurrentScene').then(data => {
-            $('input[name="obs_c_scene"]').val( data.name );
+            $('select[name="obs_c_scene"]').val( data.name );
         
             $('#obs_c_response').val( JSON.stringify(data, null, 2) );
             
