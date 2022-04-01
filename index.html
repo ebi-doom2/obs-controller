@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>obs-controller</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="obs_c_wrapper">
+    <form id="obs_c_head" class="obs_c_form">
+        <input type="text" name="obs_c_address" class="obs_c_td10" placeholder="address">
+        <input type="text" name="obs_c_password" class="obs_c_td10" placeholder="password">
+	<span>|</span>
+        <input type="button" name="obs_c_get" value="-->GET">
+        <input type="text" name="obs_c_scene" class="obs_c_td20" placeholder="scene_name" readonly="true">
+	<span>|</span>
+	<label>
+            <input type="checkbox" name="obs_c_full">
+	    <em>FULL</em>
+	</label>
+        <span>|</span>
+        <label>
+            <input type="radio" name="obs_c_radio" value="all" checked="checked">
+            <em>ALL</em>
+        </label>
+        <label>
+            <input type="radio" name="obs_c_radio" value="text">
+            <em>TEXT</em>
+        </label>
+        <label>
+            <input type="radio" name="obs_c_radio" value="browser">
+            <em>BROWSER</em>
+        </label>
+        <label>
+            <input type="radio" name="obs_c_radio" value="other">
+            <em>OTHER</em>
+        </label>
+	<span>|</span>
+
+<!----
+	<label>
+            <input type="checkbox" name="obs_c_mute_rotation">
+	    <em>mute rotation</em>
+	</label>
+    <input type="number" name="obs_c_mute_rotation_time" class="obs_c_td05" value="600">
+	<span>|</span>
+-->
+
+        <input type="button" name="obs_c_send" value="SEND-->">
+        <span>|</span>
+        <input type="button" name="obs_c_set" value="SET TSV">
+        <textarea name="obs_c_set_text" placeholder="paste TSV"></textarea>
+    </form>
+    <table id="obs_c_table">
+        <thead>
+        <tr>
+        <th><div class="obs_c_td10 readonly">type</div></th>
+        <th><div class="obs_c_td03 readonly">id</div></th>
+        <th><div class="obs_c_td10 readonly">name</div></th>
+        <th class="simple"><div class="obs_c_td05 readonly obs_c_marginLeft">sou_W</div></th>
+        <th class="simple"><div class="obs_c_td05 readonly">sou_H</div></th>
+        <th class="simple"><div class="obs_c_td03 obs_c_marginLeft">bou_T</div></th>
+        <th class="simple"><div class="obs_c_td03">bou_A</div></th>
+        <th class="simple"><div class="obs_c_td05">bou_X</div></th>
+        <th class="simple"><div class="obs_c_td05">bou_Y</div></th>
+        <th><div class="obs_c_td05 obs_c_marginLeft">crop_L</div></th>
+        <th><div class="obs_c_td05">crop_R</div></th>
+        <th><div class="obs_c_td05">crop_T</div></th>
+        <th><div class="obs_c_td05">crop_B</div></th>
+        <th><div class="obs_c_td05 readonly">Aspect</div></th>
+        <th class="simple"><div class="obs_c_td03 obs_c_marginLeft">pos_A</div></th>
+        <th class="simple"><div class="obs_c_td05">pos_X</div></th>
+        <th class="simple"><div class="obs_c_td05">pos_Y</div></th>
+        <th class="simple"><div class="obs_c_td05 obs_c_marginLeft">view_W</div></th>
+        <th class="simple"><div class="obs_c_td05">view_H</div></th>
+        <th><div class="obs_c_td30 obs_c_marginLeft">text</div></th>
+        <th><div class="obs_c_td20 obs_c_marginLeft">url</div></th>
+        <th><div class="obs_c_td05 obs_c_marginLeft">volume</div></th>
+        <th><div class="obs_c_td05">mute</div></th>
+<!----
+        <th><div class="obs_c_td05">rotation</div></th>
+-->
+        <th><div class="obs_c_td10 readonly">name</div></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+        <textarea id="obs_c_response"></textarea>
+	<img id="obs_c_support_img" src="img/bounds.png">
+    </div>
+    
+    <!-- loader -->
+    <div class="cssload-thecube">
+    	<div class="cssload-cube cssload-c1"></div>
+    	<div class="cssload-cube cssload-c2"></div>
+    	<div class="cssload-cube cssload-c4"></div>
+    	<div class="cssload-cube cssload-c3"></div>
+    </div>
+
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery.color-2.2.0.js"></script>
+    <script src="js/obs-websocket.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
