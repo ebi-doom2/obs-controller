@@ -15,6 +15,7 @@ $(function() {
     });
 
     obs.on('ConnectionOpened', () => {
+        let tempScene = $('select[name="obs_c_scene"]').val();
         obs.send('GetSceneList').then(data => {
             console.log(data);
             $('#obs_c_response').val( JSON.stringify(data, null, 2) );
@@ -24,7 +25,7 @@ $(function() {
                 $('select[name="obs_c_scene"]').append($('<option>').html(value.name).val(value.name));
             });
 
-            $('select[name="obs_c_scene"]').val( data.currentScene );
+            $('select[name="obs_c_scene"]').val( tempScene ? tempScene: data.currentScene );
 
             $("#obs_c_table tbody").html( "" );
 	    
